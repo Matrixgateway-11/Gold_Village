@@ -1,22 +1,24 @@
-import { Link } from 'react-router-dom'
+import Button from '../components/ui/Button'
 import { usePage } from '../lib/usePage'
+import '../styles/pages/not-found.css'
 
 export default function NotFound() {
   usePage({ title: 'Page not found | {name}' })
   return (
-    <main className="bespoke-page">
-      <section className="bespoke-page__grid">
-        <div className="bespoke-page__left">
-          <p className="bespoke-page__kicker">/ 404</p>
-          <h1 className="bespoke-page__title">Page not found</h1>
-          <p className="bespoke-page__sub">The page you are looking for has moved or no longer exists.</p>
-          <p className="bespoke-page__sub">
-            <Link className="trade-inline-link" to="/product-category/all/">
-              Browse the collection &rarr;
-            </Link>
-          </p>
+    <main id="main" className="not-found">
+      <div className="container container--narrow not-found__inner">
+        <div className="not-found__code" aria-hidden="true"></div>
+        <h1>This page has moved on</h1>
+        <p className="lead">The page you are looking for has moved or no longer exists. Let’s get you back to something beautiful.</p>
+        <div className="btn-row">
+          <Button to="/" arrow>
+            Back to home
+          </Button>
+          <Button to="/product-category/all/" variant="outline">
+            Browse the collection
+          </Button>
         </div>
-      </section>
+      </div>
     </main>
   )
 }

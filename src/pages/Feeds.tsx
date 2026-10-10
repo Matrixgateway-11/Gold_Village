@@ -1,6 +1,10 @@
 import { Link, useParams } from 'react-router-dom'
+import { PiArrowRight } from 'react-icons/pi'
+import PageHero from '../components/ui/PageHero'
+import Reveal from '../components/ui/Reveal'
 import { feeds, type Feed } from '../lib/data'
 import { usePage } from '../lib/usePage'
+import '../styles/pages/feeds.css'
 import NotFound from './NotFound'
 
 export const TOPICS: Record<string, string> = { collections: 'Collections', guides: 'Guides', qa: 'Q&A' }
@@ -12,18 +16,19 @@ export function FeedCard({ f, compact }: { f: Feed; compact?: boolean }) {
     <article className="feed-card">
       <Link className="feed-card__link" to={`/feeds/${f.slug}/`}>
         <div className="feed-card__img">
-          <img src={f.card} className="attachment-indocasa-card size-indocasa-card wp-post-image" alt={f.title} loading="lazy" decoding="async" />
+          <img src={f.card} alt="" loading="lazy" decoding="async" />
         </div>
         {!compact && (
           <p className="feed-card__meta">
-            <span>{f.topic}</span>
-            <span aria-hidden="true">◆</span>
+            <span className="chip">{f.topic}</span>
             <span>{f.read}</span>
           </p>
         )}
         <H className="feed-card__title">{f.title}</H>
         {!compact && <p className="feed-card__excerpt">{f.excerpt || f.lede}</p>}
-        <span className="feed-card__more">Read article &rarr;</span>
+        <span className="feed-card__more">
+          Read article <PiArrowRight aria-hidden="true" />
+        </span>
       </Link>
     </article>
   )
@@ -34,21 +39,20 @@ export default function Feeds() {
   usePage({
     title: 'Feeds – Guides & Insights on Indonesian Teak Furniture | {name}',
     description: 'Guides and insights on Indonesian teak furniture: how it is made, how export orders work and the stories behind our collections.',
-    bodyClass: 'archive post-type-archive',
   })
   if (topic && !TOPICS[topic]) return <NotFound />
   const list = topic ? feeds.filter((f) => f.topic === TOPICS[topic]) : feeds
 
   return (
-    <main className="feeds-page">
-      <header className="feeds-head">
-        <p className="feeds-kicker">/ Feeds</p>
-        <h1 className="feeds-title">Guides &amp; Insights on Indonesian Teak Furniture</h1>
-        <p className="feeds-sub">
-          Notes from our workshop in Jepara: how teak furniture is made, how export orders work, answers to the questions buyers ask us most, and the stories
-          behind our collections.
-        </p>
-        <nav className="feeds-topics" aria-label="Topics">
+    <main id="main">
+      <PageHero
+        eyebrow="Feeds"
+        title="Guides & Insights on Indonesian Teak Furniture"
+        lead="Notes from our workshop in Jepara: how teak furniture is made, how export orders work, answers to the questions buyers ask us most, and the stories behind our collections."
+        id="feeds-title"
+      />
+      <div className="container feeds">
+        <nav className="feeds__topics" aria-label="Topics">
           <Link to="/feeds/" aria-current={!topic ? 'page' : undefined}>
             All
           </Link>
@@ -58,13 +62,14 @@ export default function Feeds() {
             </Link>
           ))}
         </nav>
-      </header>
-      <div className="feeds-grid">
-        {list.map((f) => (
-          <FeedCard f={f} key={f.slug} />
-        ))}
+        <div className="feeds__grid">
+          {list.map((f, i) => (
+            <Reveal key={f.slug} delay={(i % 3) * 0.06}>
+              <FeedCard f={f} />
+            </Reveal>
+          ))}
+        </div>
       </div>
-      <div className="feeds-pagination"></div>
     </main>
   )
 }

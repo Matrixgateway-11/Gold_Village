@@ -19,8 +19,8 @@ export function LeadSelects({ idPrefix, type = '' }: { idPrefix: string; type?: 
     return allCountries.some(([c]) => c === g) ? g : ''
   }, [])
   return (
-    <>
-      <div className="bespoke-field">
+    <div className="form-row form-row--2">
+      <div className="field">
         <label htmlFor={`${idPrefix}-type`}>Project type</label>
         <select id={`${idPrefix}-type`} name="project_type" required defaultValue={type}>
           <option value="">Select…</option>
@@ -31,7 +31,7 @@ export function LeadSelects({ idPrefix, type = '' }: { idPrefix: string; type?: 
           ))}
         </select>
       </div>
-      <div className="bespoke-field">
+      <div className="field">
         <label htmlFor={`${idPrefix}-country`}>Your country</label>
         <select id={`${idPrefix}-country`} name="country" required defaultValue={country}>
           <option value="">Select…</option>
@@ -51,13 +51,14 @@ export function LeadSelects({ idPrefix, type = '' }: { idPrefix: string; type?: 
           </optgroup>
         </select>
       </div>
-    </>
+    </div>
   )
 }
 
+// Hidden field that only bots fill in; submitLead() drops those submissions.
 export function Honeypot({ id }: { id: string }) {
   return (
-    <div className="bespoke-field bespoke-field--hp" aria-hidden="true">
+    <div className="field field--hp" aria-hidden="true">
       <label htmlFor={id}>Website</label>
       <input id={id} name="bespoke_hp" type="text" tabIndex={-1} autoComplete="off" />
     </div>

@@ -1,0 +1,120 @@
+/* ==========================================================================
+   Materials
+   ========================================================================== */
+
+/* the long intro paragraph reads better on a narrower measure */
+.page-hero--lg .lead {
+  max-width: 52rem;
+  font-size: var(--fs-base);
+  line-height: 1.8;
+}
+.principles {
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.5rem);
+  grid-template-columns: 1fr;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@media (min-width: 700px) {
+  .principles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1024px) {
+  .principles {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .principles > li {
+    grid-column: span 2;
+  }
+  /* 3 + 2: centre the last row */
+  .principles > li:nth-child(4) {
+    grid-column: 2 / span 2;
+  }
+  .principles > li:nth-child(5) {
+    grid-column: 4 / span 2;
+  }
+}
+.principles > li {
+  display: block;
+}
+.principle {
+  position: relative;
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: 0.9rem;
+  height: 100%;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--linen-50);
+  transition:
+    transform var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease);
+}
+.principle h3 {
+  font-size: var(--fs-h4);
+}
+.principle p {
+  font-size: 0.9375rem;
+  color: var(--ink-soft);
+}
+.principle__n {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.5rem;
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  line-height: 1;
+  color: var(--linen-300);
+}
+@media (hover: hover) {
+  .principle:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+  }
+}
+
+.materials-gallery__grid {
+  display: grid;
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 700px) {
+  .materials-gallery__grid {
+    grid-template-columns: 1.4fr 1fr;
+  }
+  .materials-gallery__item--wide {
+    grid-row: span 2;
+  }
+}
+.materials-gallery__item img {
+  width: 100%;
+  height: 100%;
+  min-height: 14rem;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+@media (min-width: 700px) {
+  .materials-gallery__item {
+    min-height: 0;
+  }
+  .materials-gallery__item--wide img {
+    min-height: 26rem;
+  }
+}
+
+.materials-cta {
+  display: grid;
+  justify-items: center;
+  gap: 1.25rem;
+  text-align: center;
+}
+.materials-cta h2 {
+  font-size: var(--fs-h2);
+}
+.materials-cta .btn-row {
+  justify-content: center;
+}

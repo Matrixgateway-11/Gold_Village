@@ -1,0 +1,710 @@
+/* ==========================================================================
+   Components — buttons, forms, cards, headings, accordion, carousel…
+   Shared by every page. Page-specific layout lives in styles/pages/.
+   ========================================================================== */
+
+/* ── Buttons ───────────────────────────────────────────────────────────── */
+.btn {
+  --btn-bg: var(--accent);
+  --btn-fg: var(--linen-50);
+  --btn-bd: var(--btn-bg);
+  --btn-bg-h: var(--accent-hover);
+  --btn-fg-h: var(--btn-fg);
+  --btn-bd-h: var(--btn-bg-h);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7em;
+  min-height: 3.25rem; /* 52px — comfortable touch target */
+  padding: 0.85rem 1.9rem;
+  border: 1px solid var(--btn-bd);
+  border-radius: var(--radius-sm);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: var(--track-button);
+  line-height: 1.2;
+  text-align: center;
+  text-transform: uppercase;
+  white-space: normal;
+  transition:
+    background-color var(--dur) var(--ease),
+    color var(--dur) var(--ease),
+    border-color var(--dur) var(--ease),
+    transform var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.btn:hover {
+  background: var(--btn-bg-h);
+  color: var(--btn-fg-h);
+  border-color: var(--btn-bd-h);
+  box-shadow: var(--shadow-md);
+}
+.btn:active {
+  transform: translateY(1px);
+}
+.btn[disabled],
+.btn[aria-disabled='true'] {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+  pointer-events: none;
+}
+.btn__icon {
+  flex: none;
+  font-size: 1.25em;
+  transition: transform var(--dur) var(--ease);
+}
+.btn:hover .btn__icon--arrow {
+  transform: translateX(4px);
+}
+
+.btn--gold {
+  --btn-bg: var(--brass-400);
+  --btn-fg: var(--walnut-950);
+  --btn-bg-h: var(--brass-300);
+}
+.btn--dark {
+  --btn-bg: var(--forest-950);
+  --btn-fg: var(--linen-50);
+  --btn-bg-h: var(--forest-800);
+}
+.btn--light {
+  --btn-bg: var(--linen-50);
+  --btn-fg: var(--walnut-900);
+  --btn-bg-h: var(--brass-300);
+  --btn-bd-h: var(--brass-300);
+}
+.btn--outline {
+  --btn-bg: transparent;
+  --btn-fg: var(--ink);
+  --btn-bd: var(--line-strong);
+  --btn-bg-h: var(--forest-900);
+  --btn-fg-h: var(--linen-50);
+  --btn-bd-h: var(--forest-900);
+}
+.btn--outline-light {
+  --btn-bg: rgba(244, 241, 234, 0.06);
+  --btn-fg: var(--linen-50);
+  --btn-bd: rgba(244, 241, 234, 0.55);
+  --btn-bg-h: var(--linen-50);
+  --btn-fg-h: var(--walnut-900);
+  --btn-bd-h: var(--linen-50);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.btn--whatsapp {
+  --btn-bg: var(--whatsapp);
+  --btn-fg: #fff;
+  --btn-bg-h: var(--whatsapp-hover);
+}
+.btn--lg {
+  min-height: 3.5rem;
+  padding: 1rem 2.2rem;
+}
+.btn--sm {
+  min-height: 2.75rem;
+  padding: 0.6rem 1.25rem;
+}
+.btn--block {
+  width: 100%;
+}
+
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.875rem;
+}
+
+/* ── Section heading ───────────────────────────────────────────────────── */
+.section-head {
+  display: grid;
+  gap: 1rem;
+  max-width: 48rem;
+  margin-bottom: clamp(2rem, 1.2rem + 3vw, 3.75rem);
+}
+.section-head h2 {
+  font-size: var(--fs-h2);
+}
+.section-head--center {
+  margin-inline: auto;
+  text-align: center;
+  justify-items: center;
+}
+.section-head--split {
+  max-width: none;
+  grid-template-columns: 1fr;
+  align-items: end;
+}
+@media (min-width: 768px) {
+  .section-head--split {
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 2rem;
+  }
+  .section-head--split > .section-head__main {
+    display: grid;
+    gap: 1rem;
+    max-width: 44rem;
+  }
+}
+.section-head__main {
+  display: grid;
+  gap: 1rem;
+}
+
+/* ── Forms ─────────────────────────────────────────────────────────────── */
+.form {
+  display: grid;
+  gap: 1.1rem;
+}
+.field {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.45rem;
+  min-width: 0;
+}
+.field > label,
+.field__label {
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  min-height: 3.25rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 1rem; /* 16px stops iOS zooming into the field */
+  line-height: 1.4;
+  transition:
+    border-color var(--dur-fast) ease,
+    box-shadow var(--dur-fast) ease;
+}
+.field textarea {
+  min-height: 8.5rem;
+  resize: vertical;
+}
+.field input::placeholder,
+.field textarea::placeholder {
+  color: var(--ink-muted);
+  opacity: 1;
+}
+.field input:hover,
+.field select:hover,
+.field textarea:hover {
+  border-color: var(--walnut-600);
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--forest-800);
+  box-shadow: 0 0 0 3px rgba(31, 77, 58, 0.2);
+}
+.field select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 2.75rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256' fill='%2333231a'%3E%3Cpath d='M213.66 101.66l-80 80a8 8 0 0 1-11.32 0l-80-80a8 8 0 0 1 11.32-11.32L128 164.69l74.34-74.35a8 8 0 0 1 11.32 11.32Z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1rem;
+  cursor: pointer;
+}
+.field input:user-invalid,
+.field select:user-invalid,
+.field textarea:user-invalid {
+  border-color: var(--danger);
+}
+.field--hp {
+  position: absolute !important;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.form-row {
+  display: grid;
+  gap: 1.1rem;
+}
+@media (min-width: 640px) {
+  .form-row--2 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.form-error {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+  padding: 0.8rem 1rem;
+  border-left: 3px solid var(--danger);
+  background: rgba(163, 38, 28, 0.08);
+  color: var(--danger);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+}
+
+/* Required fields get an asterisk */
+.field:has(:required) > label::after {
+  content: ' *';
+  color: var(--danger);
+}
+
+/* Card that wraps an inquiry form, plus its success state */
+.form-card {
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-md);
+}
+.form-card__head {
+  display: grid;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+}
+.form-card__head h2 {
+  font-size: var(--fs-h3);
+}
+.form-card__head p {
+  font-size: 0.9375rem;
+  color: var(--ink-soft);
+}
+.form-success {
+  display: grid;
+  justify-items: center;
+  gap: 0.75rem;
+  padding: clamp(2rem, 5vw, 3rem) 1rem;
+  text-align: center;
+}
+.form-success svg {
+  font-size: 3.5rem;
+  color: var(--forest-800);
+}
+.form-success h3 {
+  font-size: var(--fs-h3);
+}
+.form-success p {
+  max-width: 36ch;
+  color: var(--ink-soft);
+}
+
+/* ── Chips & badges ────────────────────────────────────────────────────── */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface-warm);
+  color: var(--ink-soft);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  line-height: 1.2;
+}
+.chip svg {
+  color: var(--forest-700);
+  font-size: 1.15em;
+}
+
+.icon-badge {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  color: var(--forest-800);
+  font-size: 1.6rem;
+  background: var(--surface-warm);
+  transition:
+    background-color var(--dur) var(--ease),
+    color var(--dur) var(--ease),
+    border-color var(--dur) var(--ease);
+}
+.on-dark .icon-badge {
+  border-color: var(--line-on-dark);
+  background: rgba(244, 241, 234, 0.06);
+  color: var(--brass-400);
+}
+
+/* ── Breadcrumbs ───────────────────────────────────────────────────────── */
+.breadcrumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.5rem;
+  list-style: none;
+  padding: 0;
+  font-size: var(--fs-sm);
+  color: var(--ink-muted);
+}
+.breadcrumbs li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.breadcrumbs a {
+  color: var(--ink-soft);
+  font-weight: 500;
+  transition: color var(--dur-fast) ease;
+}
+.breadcrumbs a:hover {
+  color: var(--forest-800);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.breadcrumbs [aria-current='page'] {
+  color: var(--ink);
+  font-weight: 600;
+}
+.breadcrumbs .sep {
+  font-size: 0.8em;
+  opacity: 0.6;
+}
+
+/* ── Product card ──────────────────────────────────────────────────────── */
+.product-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.product-card__link {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 100%;
+}
+.product-card__media {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: #fff;
+  border: 1px solid var(--line);
+  transition:
+    box-shadow var(--dur) var(--ease),
+    border-color var(--dur) var(--ease);
+}
+.product-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.9s var(--ease);
+}
+.product-card__cta {
+  position: absolute;
+  left: 0.75rem;
+  bottom: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.55rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(18, 38, 29, 0.88);
+  color: var(--linen-50);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity var(--dur) var(--ease),
+    transform var(--dur) var(--ease);
+  pointer-events: none;
+}
+.product-card__body {
+  display: grid;
+  gap: 0.25rem;
+}
+.product-card__code {
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+}
+.product-card__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.0625rem, 0.95rem + 0.5vw, 1.375rem);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.005em;
+  text-wrap: balance;
+  transition: color var(--dur-fast) ease;
+}
+.product-card__dim {
+  font-size: var(--fs-sm);
+  color: var(--ink-muted);
+}
+@media (hover: hover) {
+  .product-card__link:hover .product-card__media {
+    box-shadow: var(--shadow-md);
+    border-color: var(--linen-400);
+  }
+  .product-card__link:hover .product-card__media img {
+    transform: scale(1.05);
+  }
+  .product-card__link:hover .product-card__cta {
+    opacity: 1;
+    transform: none;
+  }
+  .product-card__link:hover .product-card__title {
+    color: var(--forest-800);
+  }
+}
+@media (hover: none) {
+  .product-card__cta {
+    display: none;
+  }
+}
+
+/* ── Accordion (Radix) ─────────────────────────────────────────────────── */
+.accordion {
+  border-top: 1px solid var(--line-strong);
+}
+.accordion__item {
+  border-bottom: 1px solid var(--line-strong);
+}
+.accordion__header {
+  margin: 0;
+  font-size: inherit;
+}
+.accordion__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  width: 100%;
+  padding: 1.35rem 0;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  font-family: var(--font-display);
+  font-size: var(--fs-h4);
+  line-height: 1.3;
+  color: var(--ink);
+  transition: color var(--dur-fast) ease;
+}
+.accordion__trigger:hover {
+  color: var(--forest-800);
+}
+.accordion__icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  font-size: 1.1rem;
+  transition:
+    transform var(--dur) var(--ease),
+    background-color var(--dur) var(--ease),
+    color var(--dur) var(--ease);
+}
+.accordion__trigger[data-state='open'] .accordion__icon {
+  transform: rotate(45deg);
+  background: var(--forest-800);
+  border-color: var(--forest-800);
+  color: var(--linen-50);
+}
+.accordion__content {
+  overflow: hidden;
+}
+.accordion__content[data-state='open'] {
+  animation: accordion-down var(--dur) var(--ease);
+}
+.accordion__content[data-state='closed'] {
+  animation: accordion-up var(--dur) var(--ease);
+}
+.accordion__content > div {
+  padding: 0 3.5rem 1.5rem 0;
+  color: var(--ink-soft);
+  max-width: 62ch;
+}
+@keyframes accordion-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
+
+/* ── Carousel (Swiper) ─────────────────────────────────────────────────── */
+.carousel {
+  position: relative;
+}
+.carousel .swiper {
+  /* Must stay `hidden`: a visible overflow would stretch the page sideways. The padding
+     (cancelled by the negative margin) leaves room for card shadows and hover lift. */
+  overflow: hidden;
+  padding: 1rem 0 2.5rem;
+  margin: -1rem 0 -2.5rem;
+}
+.carousel .swiper-slide {
+  height: auto;
+}
+.carousel__controls {
+  display: flex;
+  gap: 0.6rem;
+}
+.carousel__btn {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ink);
+  font-size: 1.25rem;
+  transition:
+    background-color var(--dur) var(--ease),
+    color var(--dur) var(--ease),
+    border-color var(--dur) var(--ease),
+    opacity var(--dur) ease;
+}
+.carousel__btn:hover:not(:disabled) {
+  background: var(--forest-900);
+  border-color: var(--forest-900);
+  color: var(--linen-50);
+}
+.carousel__btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+.on-dark .carousel__btn {
+  border-color: var(--line-on-dark);
+  color: var(--linen-100);
+}
+.on-dark .carousel__btn:hover:not(:disabled) {
+  background: var(--linen-100);
+  color: var(--walnut-900);
+}
+.carousel__foot {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: clamp(1.75rem, 3vw, 2.5rem);
+}
+.carousel__progress {
+  flex: 1;
+  height: 2px;
+  background: var(--line);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.on-dark .carousel__progress {
+  background: var(--line-on-dark);
+}
+.carousel__progress > span {
+  display: block;
+  height: 100%;
+  background: var(--forest-800);
+  border-radius: 2px;
+  transition:
+    margin-left 0.2s linear,
+    width 0.3s var(--ease);
+}
+.on-dark .carousel__progress > span {
+  background: var(--brass-400);
+}
+
+/* ── Reveal on scroll helper (framer-motion handles the rest) ──────────── */
+.hairline {
+  height: 1px;
+  background: var(--line);
+  border: 0;
+}
+
+/* ── Page hero (inner pages) ───────────────────────────────────────────── */
+.page-hero {
+  position: relative;
+  isolation: isolate;
+}
+.page-hero__inner {
+  display: grid;
+  justify-items: start;
+  gap: 1rem;
+}
+.page-hero h1 {
+  font-size: var(--fs-h1);
+  max-width: 18ch;
+}
+.page-hero .lead {
+  max-width: 42rem;
+}
+.page-hero--image {
+  display: flex;
+  align-items: flex-end;
+  /* slide up under the transparent header */
+  margin-top: calc(var(--header-h) * -1);
+  padding-top: var(--header-h);
+  min-height: clamp(20rem, 46vh, 30rem);
+  background: var(--forest-950);
+  color: var(--linen-50);
+  overflow: hidden;
+}
+.page-hero--image.page-hero--lg {
+  min-height: clamp(30rem, 78vh, 46rem);
+}
+.page-hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.page-hero__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(to top, rgba(18, 38, 29, 0.88), rgba(18, 38, 29, 0.4) 55%, rgba(18, 38, 29, 0.6));
+}
+.page-hero--image .page-hero__inner {
+  width: 100%;
+  padding-block: clamp(2.5rem, 5vw, 4.5rem);
+}
+.page-hero--plain {
+  padding-block: clamp(3rem, 2rem + 4vw, 6rem) clamp(1.5rem, 3vw, 3rem);
+}
+.page-hero__actions {
+  margin-top: 0.75rem;
+}
+.on-dark .breadcrumbs,
+.on-dark .breadcrumbs a,
+.on-dark .breadcrumbs li {
+  color: var(--ink-on-dark-soft);
+}
+.on-dark .breadcrumbs a:hover {
+  color: #fff;
+}
+.on-dark .breadcrumbs [aria-current='page'] {
+  color: #fff;
+}

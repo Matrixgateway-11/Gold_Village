@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
+import { PiX } from 'react-icons/pi'
 
-// Full-screen image viewer. Any element with data-indocasa-lightbox="<src>"
-// opens it on click (product gallery).
+// Full-screen image viewer. Any element with data-lightbox="<src>" opens it on
+// click (product gallery). Click or pinch the image to zoom; Esc or a click on the
+// backdrop closes it.
 export default function Lightbox() {
   const [src, setSrc] = useState('')
   const [zoomW, setZoomW] = useState(0)
@@ -11,8 +13,8 @@ export default function Lightbox() {
 
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
-      const el = (e.target as HTMLElement).closest?.('[data-indocasa-lightbox]')
-      const s = el?.getAttribute('data-indocasa-lightbox')
+      const el = (e.target as HTMLElement).closest?.('[data-lightbox]')
+      const s = el?.getAttribute('data-lightbox')
       if (!s) return
       e.preventDefault()
       setZoomW(0)
@@ -24,7 +26,7 @@ export default function Lightbox() {
 
   useEffect(() => {
     if (!src) return
-    document.body.style.overflow = 'hidden'
+    document.body.classList.add('is-locked')
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         e.stopImmediatePropagation()
@@ -34,8 +36,7 @@ export default function Lightbox() {
     document.addEventListener('keydown', onKey, true)
     return () => {
       document.removeEventListener('keydown', onKey, true)
-      // keep scrolling locked if the project "view all" grid is still open
-      if (!document.querySelector('[data-project-gallery-all-modal]:not([hidden])')) document.body.style.overflow = ''
+      document.body.classList.remove('is-locked')
     }
   }, [src])
 
@@ -53,21 +54,20 @@ export default function Lightbox() {
 
   return (
     <div
-      id="indocasa-lightbox"
-      className="indocasa-lightbox"
+      className="lightbox"
       role="dialog"
       aria-modal="true"
       aria-label="Enlarged image"
       hidden={!src}
       onClick={(e) => {
-        if (e.target === e.currentTarget || (e.target as HTMLElement).closest('.indocasa-lightbox__close')) setSrc('')
+        if (e.target === e.currentTarget || (e.target as HTMLElement).closest('.lightbox__close')) setSrc('')
       }}
     >
-      <button type="button" className="indocasa-lightbox__close" aria-label="Close">
-        &times;
+      <button type="button" className="lightbox__close" aria-label="Close enlarged image">
+        <PiX aria-hidden="true" />
       </button>
       <div
-        className="indocasa-lightbox__stage"
+        className="lightbox__stage"
         ref={stage}
         onTouchStart={(e) => {
           if (e.touches.length === 2) pinch.current = { d0: dist(e.touches), w0: img.current?.getBoundingClientRect().width || 0 }
@@ -83,7 +83,7 @@ export default function Lightbox() {
         {src && (
           <img
             ref={img}
-            className={'indocasa-lightbox__img' + (zoomW ? ' is-zoomed' : '')}
+            className={'lightbox__img' + (zoomW ? ' is-zoomed' : '')}
             src={src}
             alt=""
             onClick={toggleZoom}

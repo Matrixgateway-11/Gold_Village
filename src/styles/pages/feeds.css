@@ -1,0 +1,355 @@
+/* ==========================================================================
+   Feeds (guides) + article
+   ========================================================================== */
+
+.feeds {
+  padding-block: clamp(1rem, 3vw, 2rem) var(--section-y);
+}
+.feeds__topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: clamp(1.75rem, 4vw, 3rem);
+}
+.feeds__topics a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0.55rem 1.25rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--ink);
+  transition:
+    background-color var(--dur) ease,
+    color var(--dur) ease,
+    border-color var(--dur) ease;
+}
+.feeds__topics a:hover {
+  border-color: var(--forest-900);
+}
+.feeds__topics a[aria-current='page'] {
+  background: var(--forest-900);
+  border-color: var(--forest-900);
+  color: var(--linen-50);
+}
+.feeds__grid {
+  display: grid;
+  gap: clamp(2rem, 4vw, 3rem) clamp(1.25rem, 2.5vw, 2rem);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 640px) {
+  .feeds__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1024px) {
+  .feeds__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* ── Card ──────────────────────────────────────────────────────────────── */
+.feed-card {
+  height: 100%;
+}
+.feed-card__link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  height: 100%;
+}
+.feed-card__img {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--linen-200);
+}
+.feed-card__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.9s var(--ease);
+}
+.feed-card__link:hover .feed-card__img img {
+  transform: scale(1.05);
+}
+.feed-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: var(--fs-sm);
+  color: var(--ink-muted);
+}
+.feed-card__meta .chip {
+  padding: 0.25rem 0.7rem;
+  font-size: var(--fs-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.feed-card__title {
+  font-size: var(--fs-h4);
+  line-height: 1.25;
+  transition: color var(--dur-fast) ease;
+}
+.feed-card__link:hover .feed-card__title {
+  color: var(--forest-800);
+}
+.feed-card__excerpt {
+  font-size: 0.9375rem;
+  color: var(--ink-soft);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.feed-card__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding-top: 0.25rem;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--forest-800);
+}
+.feed-card__more svg {
+  transition: transform var(--dur) var(--ease);
+}
+.feed-card__link:hover .feed-card__more svg {
+  transform: translateX(4px);
+}
+
+/* ── Article ───────────────────────────────────────────────────────────── */
+.article__head {
+  display: grid;
+  gap: 1.25rem;
+  padding-block: clamp(2.5rem, 2rem + 3vw, 5rem) clamp(1.5rem, 3vw, 2.5rem);
+}
+.article__head h1 {
+  font-size: clamp(2.1rem, 1.3rem + 3.2vw, 3.75rem);
+}
+.article__lede {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+.article__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.75rem;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--ink-muted);
+}
+.article__hero {
+  max-width: calc(1100px + var(--gutter) * 2);
+  margin-bottom: clamp(2rem, 5vw, 4rem);
+}
+.article__hero img {
+  width: 100%;
+  max-height: 34rem;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+}
+
+/* Long-form body. The markup comes from catalog.json, so style by element and the
+   few classes used there (feed-answer, feed-figure, feed-products, feed-faq, feed-cta). */
+.prose {
+  padding-bottom: var(--section-y);
+  font-size: var(--fs-md);
+  line-height: 1.85;
+  color: var(--ink-soft);
+}
+.prose > p:first-child {
+  color: var(--ink);
+}
+.prose h2 {
+  margin: 3rem 0 1rem;
+  font-size: clamp(1.7rem, 1.3rem + 1.4vw, 2.4rem);
+  line-height: 1.2;
+  color: var(--ink);
+}
+.prose h3 {
+  margin: 2rem 0 0.5rem;
+  font-size: var(--fs-h4);
+  color: var(--ink);
+}
+.prose p {
+  margin: 0 0 1.25rem;
+}
+.prose ul,
+.prose ol {
+  margin: 0 0 1.5rem;
+  padding-left: 1.4rem;
+}
+.prose li {
+  margin-bottom: 0.5rem;
+  padding-left: 0.25rem;
+}
+.prose strong {
+  font-weight: 700;
+  color: var(--ink);
+}
+.prose a {
+  color: var(--forest-800);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--brass-400);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.25em;
+}
+.prose a:hover {
+  text-decoration-color: var(--forest-800);
+}
+.prose blockquote {
+  margin: 2.25rem 0;
+  padding: 0.25rem 0 0.25rem 1.5rem;
+  border-left: 3px solid var(--brass-400);
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  line-height: 1.5;
+  color: var(--ink);
+}
+.prose .feed-answer {
+  padding: 1.25rem 1.5rem;
+  border-left: 3px solid var(--forest-800);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  background: var(--linen-200);
+  color: var(--ink);
+}
+.prose table {
+  display: block;
+  width: 100%;
+  margin: 0 0 2rem;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+.prose th,
+.prose td {
+  min-width: 10rem;
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+.prose th {
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: var(--linen-200);
+  color: var(--ink);
+}
+.prose .feed-figure {
+  margin: 2.5rem 0;
+}
+.prose .feed-figure img {
+  width: 100%;
+  border-radius: var(--radius);
+}
+.prose figcaption {
+  margin-top: 0.6rem;
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+  color: var(--ink-muted);
+}
+.prose .feed-products {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 2rem 0 2.5rem;
+}
+@media (min-width: 640px) {
+  .prose .feed-products {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+.prose a.feed-product {
+  display: block;
+  text-decoration: none;
+  color: var(--ink);
+}
+.prose .feed-product img {
+  width: 100%;
+  aspect-ratio: 1;
+  margin-bottom: 0.6rem;
+  object-fit: cover;
+  border-radius: var(--radius);
+  background: #fff;
+}
+.prose .feed-product__name {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  line-height: 1.3;
+}
+.prose .feed-product__dims {
+  display: block;
+  font-size: var(--fs-xs);
+  letter-spacing: 0.04em;
+  color: var(--ink-muted);
+}
+.prose .feed-faq {
+  margin-top: 4rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--line-strong);
+}
+.prose .feed-faq__item h3 {
+  margin-top: 1.75rem;
+}
+.prose .feed-cta {
+  margin-top: 4rem;
+  padding: clamp(1.75rem, 4vw, 3rem);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, var(--forest-950), var(--forest-900) 75%);
+  color: var(--linen-100);
+}
+.prose .feed-cta__kicker {
+  margin: 0 0 0.75rem;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: var(--track-eyebrow);
+  text-transform: uppercase;
+  color: var(--sage-300);
+}
+.prose .feed-cta__title {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  line-height: 1.2;
+  color: var(--linen-50);
+}
+.prose .feed-cta__text {
+  margin: 0 0 1.5rem;
+  font-size: 1rem;
+  color: var(--ink-on-dark-soft);
+}
+.prose a.feed-cta__btn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 3.25rem;
+  padding: 0.85rem 1.9rem;
+  border-radius: var(--radius-sm);
+  background: var(--brass-400);
+  color: var(--walnut-950);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: var(--track-button);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: background-color var(--dur) ease;
+}
+.prose a.feed-cta__btn:hover {
+  background: var(--brass-300);
+}
+.related-title {
+  margin-bottom: 2rem;
+  font-size: var(--fs-h2);
+}

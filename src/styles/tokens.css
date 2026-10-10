@@ -1,0 +1,134 @@
+/* ==========================================================================
+   Golden Village — design tokens
+   One place for colour, type, spacing, radius, shadow, motion and layers.
+   Palette "Tropical resort": sand + bark (the walls and the wood), jungle green
+   (the garden — buttons and dark sections), terracotta (the warm accent) and
+   champagne (the "golden"). Every text/background pair used in the UI is
+   WCAG AA or better (ratios noted beside each token).
+   ========================================================================== */
+
+:root {
+  /* ── Raw palette ─────────────────────────────────────────────────────── */
+  /* Sand — warm off-whites for page and surfaces */
+  --linen-50: #faf8f2;
+  --linen-100: #f4f1ea; /* page background */
+  --linen-200: #eae3d3; /* alternate sections */
+  --linen-300: #ddd2ba;
+  --linen-400: #c9ba9c;
+
+  /* Bark — teak-dark neutrals for text */
+  --walnut-950: #14100b;
+  --walnut-900: #1e1812;
+  --walnut-800: #2a2118; /* body text            · 14.0:1 on sand */
+  --walnut-700: #46382b;
+  --walnut-600: #5a4838; /* secondary text       ·  7.7:1 on sand */
+  --walnut-500: #6e5a47; /* muted / captions     ·  5.8:1 on sand, 5.1:1 on alt sand */
+
+  /* Champagne — the "golden". Bright tints only on dark green */
+  --brass-300: #e8d3a0; /* hover · 10.8:1 on jungle */
+  --brass-400: #d9b877; /* buttons/accents on dark · 8.4:1 on jungle */
+  --brass-500: #be9a55;
+  --brass-700: #7a5a20; /* gold text on sand · 5.6:1 */
+
+  /* Terracotta — the warm accent for eyebrows, italic words, step numbers */
+  --clay-300: #e3a07f; /* on jungle · 7.3:1 */
+  --clay-500: #c4693d;
+  --clay-600: #a2492a; /* text on sand · 5.3:1 (4.7:1 on alt sand) */
+  --clay-700: #8a3c21;
+
+  /* Jungle — tropical foliage: actions, links and dark sections */
+  --forest-950: #12261d; /* dark sections, footer */
+  --forest-900: #17392b;
+  --forest-800: #1f4d3a; /* primary button · 9.1:1 with sand text */
+  --forest-700: #2b6048;
+  --forest-600: #3c7a5d;
+  --sage-300: #afc4ae; /* soft green text on jungle · 8.6:1 */
+  --sage-200: #cbdacb;
+
+  /* ── Semantic roles ──────────────────────────────────────────────────── */
+  --bg: var(--linen-100);
+  --bg-alt: var(--linen-200);
+  --surface: #ffffff;
+  --surface-warm: var(--linen-50);
+  --dark: var(--forest-950);
+  --dark-deep: #0c1a14;
+
+  --ink: var(--walnut-800);
+  --ink-soft: var(--walnut-600);
+  --ink-muted: var(--walnut-500);
+  --ink-on-dark: var(--linen-100);
+  --ink-on-dark-soft: rgba(244, 241, 234, 0.78);
+  --ink-on-dark-muted: rgba(244, 241, 234, 0.62);
+
+  --accent: var(--forest-800);
+  --accent-hover: var(--forest-900);
+  --accent-text: var(--clay-600);
+  --gold: var(--brass-400);
+  --gold-text: var(--clay-600); /* italic accent words and step numbers use terracotta */
+
+  --line: rgba(42, 33, 24, 0.14);
+  --line-strong: rgba(42, 33, 24, 0.32);
+  --line-on-dark: rgba(244, 241, 234, 0.16);
+
+  --focus: var(--clay-600);
+  --danger: #a3261c; /* 6.4:1 on sand */
+  --whatsapp: #0f7d41; /* white text 5.2:1 */
+  --whatsapp-hover: #0b6a37;
+
+  /* ── Typography ──────────────────────────────────────────────────────── */
+  --font-display: 'Fraunces Variable', 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body: 'Manrope Variable', 'Manrope', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  /* Fluid scale: min at 360px wide, max at 1440px wide */
+  --fs-xs: 0.75rem; /* 12 — eyebrows, captions (never smaller) */
+  --fs-sm: 0.875rem; /* 14 */
+  --fs-base: 1rem; /* 16 */
+  --fs-md: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+  --fs-lg: clamp(1.1875rem, 1.05rem + 0.55vw, 1.4375rem);
+  --fs-h4: clamp(1.25rem, 1.13rem + 0.5vw, 1.5rem);
+  --fs-h3: clamp(1.4375rem, 1.2rem + 0.95vw, 2rem);
+  --fs-h2: clamp(2rem, 1.35rem + 2.6vw, 3.5rem);
+  --fs-h1: clamp(2.5rem, 1.6rem + 3.8vw, 4.75rem);
+  --fs-display: clamp(2.75rem, 1.5rem + 5.4vw, 6rem);
+
+  --lh-tight: 1.08;
+  --lh-snug: 1.25;
+  --lh-body: 1.7;
+  --track-eyebrow: 0.22em;
+  --track-button: 0.14em;
+
+  /* ── Layout ──────────────────────────────────────────────────────────── */
+  --gutter: clamp(1.25rem, 0.4rem + 3.8vw, 4.5rem);
+  --container: 1360px;
+  --container-narrow: 780px;
+  --section-y: clamp(4rem, 2.6rem + 6vw, 8.5rem);
+  --header-h: 64px;
+
+  /* ── Shape & depth ──────────────────────────────────────────────────── */
+  --radius-sm: 3px;
+  --radius: 6px;
+  --radius-lg: 12px;
+  --shadow-sm: 0 1px 2px rgba(42, 33, 24, 0.06), 0 2px 8px rgba(42, 33, 24, 0.05);
+  --shadow-md: 0 2px 6px rgba(42, 33, 24, 0.06), 0 14px 32px -10px rgba(42, 33, 24, 0.18);
+  --shadow-lg: 0 4px 12px rgba(42, 33, 24, 0.08), 0 28px 60px -18px rgba(42, 33, 24, 0.32);
+
+  /* ── Motion ──────────────────────────────────────────────────────────── */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 0.18s;
+  --dur: 0.35s;
+  --dur-slow: 0.7s;
+
+  /* ── Layers ──────────────────────────────────────────────────────────── */
+  --z-fab: 90;
+  --z-mega: 99;
+  --z-header: 100;
+  --z-drawer: 98;
+  --z-panel: 110;
+  --z-lightbox: 300;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --header-h: 80px;
+  }
+}

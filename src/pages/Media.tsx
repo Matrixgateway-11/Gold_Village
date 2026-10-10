@@ -1,6 +1,10 @@
 import { useState } from 'react'
+import { PiArrowUpRight, PiPlay } from 'react-icons/pi'
+import PageHero from '../components/ui/PageHero'
+import Reveal from '../components/ui/Reveal'
 import { usePage } from '../lib/usePage'
 import { site } from '../site'
+import '../styles/pages/media.css'
 
 // Press coverage. These three entries link to real third-party articles about
 // the reference site's company (Indocasa), so the summaries avoid naming anyone
@@ -86,7 +90,9 @@ function VideoThumb({ p }: { p: Press }) {
   return (
     <button type="button" className="media-video" aria-label={`Play video: ${p.title}`} onClick={() => setPlay(true)}>
       <img src={p.img} alt={p.alt} loading="lazy" decoding="async" width={p.w} height={p.h} />
-      <span className="media-video__play" aria-hidden="true"></span>
+      <span className="media-video__play" aria-hidden="true">
+        <PiPlay />
+      </span>
     </button>
   )
 }
@@ -94,20 +100,21 @@ function VideoThumb({ p }: { p: Press }) {
 export default function Media() {
   usePage({ title: 'Media & Press | {name}', description: `Press features and interviews on ${site.name} and Jepara teak craftsmanship.` })
   return (
-    <main className="media-page">
-      <header className="media-page__head">
-        <p className="media-page__kicker">/ Media</p>
-        <h1 className="media-page__title">{site.name} in the Press</h1>
-        <p className="media-page__sub">Features and interviews on {site.name} and our Jepara craftsmanship.</p>
-      </header>
-      <div className="media-list">
-        {PRESS.map((p) => (
-          <article className={'media-item' + (p.video ? ' media-item--video' : '')} key={p.url}>
+    <main id="main">
+      <PageHero
+        eyebrow="Media"
+        title={`${site.name} in the Press`}
+        lead={`Features and interviews on ${site.name} and our Jepara craftsmanship.`}
+        id="media-title"
+      />
+      <div className="container media-list">
+        {PRESS.map((p, i) => (
+          <Reveal as="article" className="media-item" key={p.url} delay={i * 0.05}>
             <div className="media-item__media">
               {p.video ? (
                 <VideoThumb p={p} />
               ) : (
-                <a href={p.url} target="_blank" rel="noopener" tabIndex={-1} aria-hidden="true">
+                <a href={p.url} target="_blank" rel="noopener noreferrer" tabIndex={-1} aria-hidden="true">
                   <img src={p.img} alt={p.alt} loading="lazy" decoding="async" width={p.w} height={p.h} />
                 </a>
               )}
@@ -116,24 +123,26 @@ export default function Media() {
             <div className="media-item__copy">
               <p className="media-item__meta">
                 <span>{p.outlet}</span>
-                <span aria-hidden="true">◆</span>
+                <span aria-hidden="true">·</span>
                 <time dateTime={p.date}>{p.dateText}</time>
-                <span aria-hidden="true">◆</span>
-                <span>{p.kind}</span>
+                <span className="chip">{p.kind}</span>
               </p>
-              <h2 className="media-item__title">{p.title}</h2>
+              <h2>{p.title}</h2>
               {p.subtitle && <p className="media-item__subtitle">{p.subtitle}</p>}
               <p className="media-item__excerpt">{p.excerpt}</p>
-              <a className="media-item__link" href={p.url} target="_blank" rel="noopener">
-                {p.video ? 'Watch on YouTube' : 'Read the article'} &rarr;
+              <a className="link-arrow" href={p.url} target="_blank" rel="noopener noreferrer">
+                {p.video ? 'Watch on YouTube' : 'Read the article'}
+                <PiArrowUpRight aria-hidden="true" />
               </a>
             </div>
-          </article>
+          </Reveal>
         ))}
       </div>
-      <section className="media-page__contact">
-        <p>Press and media enquiries</p>
-        <a href={`mailto:${site.email}`}>{site.email}</a>
+      <section className="section--tight section--dark on-dark media-contact">
+        <div className="container media-contact__inner">
+          <p className="eyebrow">Press and media enquiries</p>
+          <a href={`mailto:${site.email}`}>{site.email}</a>
+        </div>
       </section>
     </main>
   )
