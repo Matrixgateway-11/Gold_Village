@@ -1,0 +1,26 @@
+/* Small additions on top of theme.css for the React build. */
+
+[hidden] { display: none !important; }
+
+/* Inline SVG logos stand in for the reference site's PNG wordmarks. */
+.site-header .brand-logo { height: 30px; width: auto; overflow: visible; }
+.footer-brand-logo { height: 100px; width: auto; overflow: visible; }
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0);
+  white-space: nowrap; border: 0;
+}
+
+.product-tax-scroll-sentinel { height: 1px; }
+
+/* Golden Village type: Fraunces (headings) + Manrope (text, menus, buttons). */
+:root {
+  --serif: "Fraunces", Georgia, serif;
+  --sans: "Manrope", "Segoe UI", sans-serif;
+}
+
+/* Long email addresses in large type must not push the page wider on phones. */
+.media-page__contact a { overflow-wrap: anywhere; }

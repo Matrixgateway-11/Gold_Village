@@ -1,0 +1,96 @@
+import { useEffect, useRef, useState } from 'react'
+
+// Full-screen image viewer. Any element with data-indocasa-lightbox="<src>"
+// opens it on click (product gallery).
+export default function Lightbox() {
+  const [src, setSrc] = useState('')
+  const [zoomW, setZoomW] = useState(0)
+  const stage = useRef<HTMLDivElement>(null)
+  const img = useRef<HTMLImageElement>(null)
+  const pinch = useRef({ d0: 0, w0: 0 })
+
+  useEffect(() => {
+    const onClick = (e: MouseEvent) => {
+      const el = (e.target as HTMLElement).closest?.('[data-indocasa-lightbox]')
+      const s = el?.getAttribute('data-indocasa-lightbox')
+      if (!s) return
+      e.preventDefault()
+      setZoomW(0)
+      setSrc(s)
+    }
+    document.addEventListener('click', onClick)
+    return () => document.removeEventListener('click', onClick)
+  }, [])
+
+  useEffect(() => {
+    if (!src) return
+    document.body.style.overflow = 'hidden'
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        e.stopImmediatePropagation()
+        setSrc('')
+      }
+    }
+    document.addEventListener('keydown', onKey, true)
+    return () => {
+      document.removeEventListener('keydown', onKey, true)
+      // keep scrolling locked if the project "view all" grid is still open
+      if (!document.querySelector('[data-project-gallery-all-modal]:not([hidden])')) document.body.style.overflow = ''
+    }
+  }, [src])
+
+  const toggleZoom = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    const im = img.current
+    const st = stage.current
+    if (!im || !st || !im.naturalWidth) return
+    if (zoomW) return setZoomW(0)
+    const fit = im.naturalWidth * Math.min(st.clientWidth / im.naturalWidth, st.clientHeight / im.naturalHeight, 1)
+    setZoomW(Math.round(Math.min(im.naturalWidth, Math.max(fit * 2, fit * 1.25))))
+  }
+
+  const dist = (t: React.TouchList) => Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY)
+
+  return (
+    <div
+      id="indocasa-lightbox"
+      className="indocasa-lightbox"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Enlarged image"
+      hidden={!src}
+      onClick={(e) => {
+        if (e.target === e.currentTarget || (e.target as HTMLElement).closest('.indocasa-lightbox__close')) setSrc('')
+      }}
+    >
+      <button type="button" className="indocasa-lightbox__close" aria-label="Close">
+        &times;
+      </button>
+      <div
+        className="indocasa-lightbox__stage"
+        ref={stage}
+        onTouchStart={(e) => {
+          if (e.touches.length === 2) pinch.current = { d0: dist(e.touches), w0: img.current?.getBoundingClientRect().width || 0 }
+        }}
+        onTouchMove={(e) => {
+          const { d0, w0 } = pinch.current
+          if (e.touches.length !== 2 || d0 <= 0 || w0 <= 0) return
+          const nat = img.current?.naturalWidth || w0
+          setZoomW(Math.round(Math.min(nat, Math.max((w0 * dist(e.touches)) / d0, 48))))
+        }}
+        onTouchEnd={() => (pinch.current = { d0: 0, w0: 0 })}
+      >
+        {src && (
+          <img
+            ref={img}
+            className={'indocasa-lightbox__img' + (zoomW ? ' is-zoomed' : '')}
+            src={src}
+            alt=""
+            onClick={toggleZoom}
+            style={zoomW ? { width: zoomW, height: 'auto', maxWidth: 'none', maxHeight: 'none' } : undefined}
+          />
+        )}
+      </div>
+    </div>
+  )
+}
